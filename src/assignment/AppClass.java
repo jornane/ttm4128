@@ -64,7 +64,7 @@ public class AppClass {
 		}
 	}        
 
-	public String getValue(String in) throws IOException, NullPointerException {
+	public String getValue(String in) throws NullPointerException {
 		String mib = getMibObjectName(in);
 
 		ProcessBuilder pb = new ProcessBuilder(
@@ -73,6 +73,7 @@ public class AppClass {
 				agent,
 				MIBMAP.get(mib)+"::"+mib
 			);
+		try {
 		String a = null;
 		Process p = pb.start();
 		Scanner scanner = new Scanner(p.getInputStream(), "UTF-8");
@@ -80,6 +81,7 @@ public class AppClass {
 		if (scanner.hasNext()) a = scanner.next();
 		scanner.close();
 		return a.substring(a.indexOf(":")+1).trim();
+		} catch (IOException e) { return null; }
 	}
 
 	public String getMibObjectName(String in) throws NullPointerException {
@@ -97,11 +99,6 @@ public class AppClass {
 		String agent = "129.241.209.30";
 		String owlPath = "data/sematicweb-2013-new.owl";
 		AppClass a = new AppClass(owlPath ,agent);
-		try {
-			System.out.println(a.getValue("defttl"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.println(a.getValue("defttl"));
 	}        
 }
