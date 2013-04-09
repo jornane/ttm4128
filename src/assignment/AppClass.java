@@ -1,6 +1,7 @@
 package assignment;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -25,20 +26,22 @@ public class AppClass {
 	private final String owlPath;
 	private OntModel ontology;
 	private InfModel inf;
-	public final static Map<String,String> MIBMAP = new HashMap<String, String>();
+	public final static Map<String,String> MIBMAP;
 	public final static String NS = "http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#";
 
 	static {
-		MIBMAP.put("hrSystemDate", "HOST-RESOURCES-MIB");
-		MIBMAP.put("hrSystemMaxProcesses", "HOST-RESOURCES-MIB");
-		MIBMAP.put("hrSystemNumUsers", "HOST-RESOURCES-MIB");
-		MIBMAP.put("hrSystemUptime", "HOST-RESOURCES-MIB");
-		MIBMAP.put("snmpEnableAuthenTraps","SNMPv2-MIB");
-		MIBMAP.put("snmpInPkts", "SNMPv2-MIB");
-		MIBMAP.put("tcpInSegs","TCP-MIB");
-		MIBMAP.put("tcpMaxConn","TCP-MIB");		
-		MIBMAP.put("udpNoPorts","UDP-MIB");                
-		MIBMAP.put("udpOutDatagrams","UDP-MIB");
+		Map<String, String> mibMap = new HashMap<String,String>();
+		mibMap .put("hrSystemDate", "HOST-RESOURCES-MIB");
+		mibMap.put("hrSystemMaxProcesses", "HOST-RESOURCES-MIB");
+		mibMap.put("hrSystemNumUsers", "HOST-RESOURCES-MIB");
+		mibMap.put("hrSystemUptime", "HOST-RESOURCES-MIB");
+		mibMap.put("snmpEnableAuthenTraps","SNMPv2-MIB");
+		mibMap.put("snmpInPkts", "SNMPv2-MIB");
+		mibMap.put("tcpInSegs","TCP-MIB");
+		mibMap.put("tcpMaxConn","TCP-MIB");		
+		mibMap.put("udpNoPorts","UDP-MIB");                
+		mibMap.put("udpOutDatagrams","UDP-MIB");
+		MIBMAP = Collections.unmodifiableMap(mibMap);
 	}
 
 	public AppClass(String owlPath,String agent) {
@@ -61,7 +64,7 @@ public class AppClass {
 		}
 	}        
 
-	public String getValue(String in) throws IOException, NullPointerException {
+	public String getValue(String in) throws NullPointerException {
 		String mib = getMibObjectName(in);
 
 		ProcessBuilder pb = new ProcessBuilder(
@@ -70,6 +73,7 @@ public class AppClass {
 				agent,
 				MIBMAP.get(mib)+"::"+mib
 			);
+		try {
 		String a = null;
 		Process p = pb.start();
 		Scanner scanner = new Scanner(p.getInputStream(), "UTF-8");
@@ -77,11 +81,12 @@ public class AppClass {
 		if (scanner.hasNext()) a = scanner.next();
 		scanner.close();
 		return a.substring(a.indexOf(":")+1).trim();
+		} catch (IOException e) { return null; }
 	}
 
 	public String getMibObjectName(String in) throws NullPointerException {
 		OntClass cls = ontology.getOntClass(NS+in);
-		Resource aliases = inf.getResource(NS+"aliases");                               
+		Resource aliases = inf.getResource(NS+"aliases");
 		if(cls.hasSuperClass(aliases)) {
 			return cls.getSuperClass().getLocalName();
 		} else {
@@ -94,11 +99,6 @@ public class AppClass {
 		String agent = "129.241.209.30";
 		String owlPath = "data/sematicweb-2013-new.owl";
 		AppClass a = new AppClass(owlPath ,agent);
-		try {
-			System.out.println(a.getValue("defttl"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.println(a.getValue("defttl"));
 	}        
 }
