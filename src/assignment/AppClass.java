@@ -77,10 +77,9 @@ public class AppClass {
 				agent,
 				MIBMAP.get(mib)+"::"+mib
 			);
-		Process p;
-		String a;
+		String a = null;
 		try {
-			p = pb.start();
+			Process p = pb.start();
 			a = procToStr(p);                        
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
