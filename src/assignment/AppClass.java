@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
@@ -64,45 +65,22 @@ public class AppClass {
 		}
 	}        
 
-	public String getValue(String in) {
-		String mib = "";
-		int numOfAgents = 0;
-		ArrayList<Double> vals = new ArrayList<Double>();
-		try {
-			mib = getMibObjectName(in);
-		} catch(NullPointerException dne) {
-			return "Didn't get a proper mibObject when trying "+in;
-		}
+	public String getValue(String in) throws IOException {
+		String mib = getMibObjectName(in);
 
 		ProcessBuilder pb = new ProcessBuilder(
 				"snmpgetnext",
-				"-v", "2c", "-c", "ttm4128",
+				"-v2c", "-cttm4128", "-Ov",
 				agent,
 				MIBMAP.get(mib)+"::"+mib
 			);
 		String a = null;
-		try {
-			Process p = pb.start();
-			a = procToStr(p);                        
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		double result = Double.parseDouble((a.substring(a.lastIndexOf(":")+1).trim()));
-		vals.add(result);
-
-		if(vals.size()>0) {
-			double min = Collections.min(vals);
-			double max = Collections.max(vals);
-			double sum = 0;
-			for(double i: vals) {
-				sum+=i;
-			}
-			double average = sum/vals.size();
-			return (String.format("<success>true</success><result><mib>%s</mib><minimum>%s</minimum><maximum>%s</maximum><average>%s</average><agentcount>%s</agentcount></result>",mib,min,max,average,numOfAgents));
-		} else {
-			return "<success>false</success><error>Could not get values from any agents.</error>";
-		}
+		Process p = pb.start();
+		Scanner scanner = new Scanner(p.getInputStream(), "UTF-8");
+		scanner.useDelimiter("\\A");
+		if (scanner.hasNext()) a = scanner.next();
+		scanner.close();
+		return a.substring(a.indexOf(":")+1).trim();
 	}
 
 	public String getMibObjectName(String in) throws NullPointerException {
@@ -148,6 +126,11 @@ public class AppClass {
 		String agent = "129.241.209.30";
 		String owlPath = "data/sematicweb-2013-new.owl";
 		AppClass a = new AppClass(owlPath ,agent);
-		System.out.println(a.getValue("defttl"));
+		try {
+			System.out.println(a.getValue("defttl"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}        
 }
