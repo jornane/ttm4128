@@ -32,13 +32,16 @@ public class AppClass {
 	public final static String NS = "http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#";
 
 	static {
+		MIBMAP.put("hrSystemDate", "HOST-RESOURCES-MIB");
+		MIBMAP.put("hrSystemMaxProcesses", "HOST-RESOURCES-MIB");
+		MIBMAP.put("hrSystemNumUsers", "HOST-RESOURCES-MIB");
 		MIBMAP.put("hrSystemUptime", "HOST-RESOURCES-MIB");
-		MIBMAP.put("ipDefaultTTL", "IP-MIB");
-		MIBMAP.put("ipInDelivers", "IP-MIB");
-		MIBMAP.put("sysUpTime","SNMPv2-MIB");
+		MIBMAP.put("snmpEnableAuthenTraps","SNMPv2-MIB");
+		MIBMAP.put("snmpInPkts", "SNMPv2-MIB");
 		MIBMAP.put("tcpInSegs","TCP-MIB");
-		MIBMAP.put("tcpRtoMin","TCP-MIB");
-		MIBMAP.put("udpInDatagrams","UDP-MIB");                
+		MIBMAP.put("tcpMaxConn","TCP-MIB");		
+		MIBMAP.put("udpNoPorts","UDP-MIB");                
+		MIBMAP.put("udpOutDatagrams","UDP-MIB");
 	}
 
 	public AppClass(String owlPath,String agent) {
