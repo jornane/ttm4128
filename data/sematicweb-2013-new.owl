@@ -1,0 +1,530 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY sematicweb-2013 "http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#"
+     xml:base="http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:sematicweb-2013="http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#">
+    <owl:Ontology rdf:about="http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#hasDatatype -->
+
+    <owl:ObjectProperty rdf:about="&sematicweb-2013;hasDatatype">
+        <rdfs:domain rdf:resource="&sematicweb-2013;CNMP_Object"/>
+        <rdfs:domain rdf:resource="&sematicweb-2013;SNMP_Object"/>
+        <rdfs:range rdf:resource="&sematicweb-2013;datatype"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#isPartofModule -->
+
+    <owl:ObjectProperty rdf:about="&sematicweb-2013;isPartofModule">
+        <rdfs:domain rdf:resource="&sematicweb-2013;CNMP_Object"/>
+        <rdfs:range rdf:resource="&sematicweb-2013;MIB_Module"/>
+        <rdfs:domain rdf:resource="&sematicweb-2013;SNMP_Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#CNMP_Object -->
+
+    <owl:Class rdf:about="&sematicweb-2013;CNMP_Object"/>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#Counter32 -->
+
+    <owl:Class rdf:about="&sematicweb-2013;Counter32">
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;datatype"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#Gauge32 -->
+
+    <owl:Class rdf:about="&sematicweb-2013;Gauge32">
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;datatype"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#HOST-RESOURCES-MIB -->
+
+    <owl:Class rdf:about="&sematicweb-2013;HOST-RESOURCES-MIB">
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;MIB_Module"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#INTEGER -->
+
+    <owl:Class rdf:about="&sematicweb-2013;INTEGER">
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;datatype"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#IpAddress -->
+
+    <owl:Class rdf:about="&sematicweb-2013;IpAddress">
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;datatype"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#MIB_Module -->
+
+    <owl:Class rdf:about="&sematicweb-2013;MIB_Module">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#SNMP_Object -->
+
+    <owl:Class rdf:about="&sematicweb-2013;SNMP_Object">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#SNMPv2-MIB -->
+
+    <owl:Class rdf:about="&sematicweb-2013;SNMPv2-MIB">
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;MIB_Module"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#STRING -->
+
+    <owl:Class rdf:about="&sematicweb-2013;STRING">
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;datatype"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#TCP-MIB -->
+
+    <owl:Class rdf:about="&sematicweb-2013;TCP-MIB">
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;MIB_Module"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#UDP-MIB -->
+
+    <owl:Class rdf:about="&sematicweb-2013;UDP-MIB">
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;MIB_Module"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#X5178 -->
+
+    <owl:Class rdf:about="&sematicweb-2013;X5178">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;Counter32"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;TCP-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;CNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#datatype -->
+
+    <owl:Class rdf:about="&sematicweb-2013;datatype">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#hrSystemDate -->
+
+    <owl:Class rdf:about="&sematicweb-2013;hrSystemDate">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;STRING"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;HOST-RESOURCES-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;SNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#hrSystemMaxProcesses -->
+
+    <owl:Class rdf:about="&sematicweb-2013;hrSystemMaxProcesses">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;INTEGER"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;HOST-RESOURCES-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;SNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#hrSystemNumUsers -->
+
+    <owl:Class rdf:about="&sematicweb-2013;hrSystemNumUsers">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;Gauge32"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;HOST-RESOURCES-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;SNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#hrSystemUptime -->
+
+    <owl:Class rdf:about="&sematicweb-2013;hrSystemUptime">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;timeticks"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;HOST-RESOURCES-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;SNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#snmpEnableAuthenTraps -->
+
+    <owl:Class rdf:about="&sematicweb-2013;snmpEnableAuthenTraps">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;INTEGER"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;SNMPv2-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;SNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#snmpInPkts -->
+
+    <owl:Class rdf:about="&sematicweb-2013;snmpInPkts">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;Counter32"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;SNMPv2-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;SNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#tcpInSegs -->
+
+    <owl:Class rdf:about="&sematicweb-2013;tcpInSegs">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;Counter32"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;TCP-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;SNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#tcpMaxConn -->
+
+    <owl:Class rdf:about="&sematicweb-2013;tcpMaxConn">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;INTEGER"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;TCP-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;SNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#timeticks -->
+
+    <owl:Class rdf:about="&sematicweb-2013;timeticks">
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;datatype"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#udpNoPorts -->
+
+    <owl:Class rdf:about="&sematicweb-2013;udpNoPorts">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;Counter32"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;UDP-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;SNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#udpOutDatagrams -->
+
+    <owl:Class rdf:about="&sematicweb-2013;udpOutDatagrams">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;Counter32"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;UDP-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;SNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#x1234 -->
+
+    <owl:Class rdf:about="&sematicweb-2013;x1234">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;Gauge32"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;HOST-RESOURCES-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;CNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#x3125 -->
+
+    <owl:Class rdf:about="&sematicweb-2013;x3125">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;INTEGER"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;TCP-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;CNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#x4912 -->
+
+    <owl:Class rdf:about="&sematicweb-2013;x4912">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;Counter32"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;SNMPv2-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;CNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#x5982 -->
+
+    <owl:Class rdf:about="&sematicweb-2013;x5982">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;INTEGER"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;SNMPv2-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;CNMP_Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#x6742 -->
+
+    <owl:Class rdf:about="&sematicweb-2013;x6742">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;hasDatatype"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;timeticks"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&sematicweb-2013;isPartofModule"/>
+                        <owl:allValuesFrom rdf:resource="&sematicweb-2013;HOST-RESOURCES-MIB"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&sematicweb-2013;CNMP_Object"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
