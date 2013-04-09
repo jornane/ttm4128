@@ -7,7 +7,9 @@
 
 # Compiled
 bin
+target
 
 # Eclipse specific
+.settings
 .project
 .classpath
