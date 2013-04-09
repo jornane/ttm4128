@@ -1,10 +1,6 @@
 package assignment;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -65,7 +61,7 @@ public class AppClass {
 		}
 	}        
 
-	public String getValue(String in) throws IOException {
+	public String getValue(String in) throws IOException, NullPointerException {
 		String mib = getMibObjectName(in);
 
 		ProcessBuilder pb = new ProcessBuilder(
@@ -91,34 +87,6 @@ public class AppClass {
 		} else {
 			return cls.getLocalName();
 		}
-	}
-
-	public String procToStr(Process proc) {
-		String retStr = "";
-		try {
-			BufferedReader bri = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-			String line;
-			while ((line = bri.readLine()) != null) {
-				retStr+=line;
-			}
-			bri.close();
-			proc.waitFor();
-		} catch (Exception e) {
-			//	e.printStackTrace();
-		}
-		return retStr;
-	}
-
-	public String cmdToStr(String cmd) {
-		String[] command = cmd.split(" ");
-		Process child;
-		try {
-			child = Runtime.getRuntime().exec(command);
-			return procToStr(child);
-		} catch (IOException e) {
-			//	e.printStackTrace();
-		}
-		return null;
 	}
 
 	public static void main(String[] args) {
