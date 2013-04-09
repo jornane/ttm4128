@@ -10,3 +10,4 @@ bin
 
 # Eclipse specific
 .project
+.classpath
