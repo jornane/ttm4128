@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Vector;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
@@ -26,7 +27,17 @@ public class AppClass {
 	private OntModel ontology;
 	private InfModel inf;
 	public final static Map<String,String> MIBobjectsMap;
-	public final static String NS = "http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#";	
+	public final static Vector<String> CNMPobjects = new Vector<>();
+	public final static String NS = "http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#";
+	
+	static {
+		CNMPobjects.add("x5178");
+		CNMPobjects.add("x3125");
+		CNMPobjects.add("x4912");
+		CNMPobjects.add("x5982");
+		CNMPobjects.add("x1234");
+		CNMPobjects.add("x6742");
+	}
 
 	static {
 		Map<String, String> mibMap = new HashMap<String,String>();
@@ -37,8 +48,8 @@ public class AppClass {
 		mibMap.put("snmpEnableAuthenTraps","SNMPv2-MIB");
 		mibMap.put("snmpInPkts", "SNMPv2-MIB");
 		mibMap.put("tcpInSegs","TCP-MIB");
-		mibMap.put("tcpMaxConn","TCP-MIB");		
-		mibMap.put("udpNoPorts","UDP-MIB");                
+		mibMap.put("tcpMaxConn","TCP-MIB");
+		mibMap.put("udpNoPorts","UDP-MIB");
 		mibMap.put("udpOutDatagrams","UDP-MIB");
 		MIBobjectsMap = Collections.unmodifiableMap(mibMap);
 	}
@@ -55,10 +66,10 @@ public class AppClass {
 	}
 
 	public String mibObjectFinder(Model model, Resource resource, Property p, String s) {
-		for (StmtIterator iterator = model.listStatements(resource,p,s); iterator.hasNext();) {						
+		for (StmtIterator iterator = model.listStatements(resource,p,s); iterator.hasNext();) {
 			Statement stmt = iterator.nextStatement();
 			for (Map.Entry<String, String> entry : MIBobjectsMap.entrySet()) {
-				if (PrintUtil.print(stmt).contains(entry.getKey())) {					
+				if (PrintUtil.print(stmt).contains(entry.getKey())) {
 					return entry.getKey();
 				}
 			}		
@@ -91,11 +102,29 @@ public class AppClass {
 		} catch (IOException e) { return null; }
 	}
 	
+	public static boolean objectValidator(String input) {
+		for (int i=0; i<CNMPobjects.size(); i++) {
+			if (input.equals(CNMPobjects.get(i))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static void main(String[] args) {
 		String agent = "129.241.209.30";
 		String owlPath = "data/sematicweb-2013-new.owl";
 		AppClass a = new AppClass(owlPath ,agent);
-		String cnmpObject = "x5982";
-		System.out.println(a.getMIBobjectValue(cnmpObject));
+		System.out.println("Please enter the CNMP Object name: ");
+		String cnmpObject;
+		Scanner reader = new Scanner(System.in);
+		cnmpObject = reader.nextLine();
+		reader.close();
+		if (objectValidator(cnmpObject)) {
+			System.out.println("Processing...");
+			System.out.println(a.getMIBobjectValue(cnmpObject));
+		} else {
+			System.out.println("The CNMP Object inserted is not valid...");
+		}
 	}
 }
