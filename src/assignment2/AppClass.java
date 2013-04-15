@@ -1,6 +1,8 @@
 package assignment2;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,10 +24,12 @@ import com.hp.hpl.jena.util.FileManager;
 import com.hp.hpl.jena.util.PrintUtil;
 
 public class AppClass {
-	private String agent;
-	private final String owlPath;
-	private OntModel ontology;
-	private InfModel inf;
+	protected String agent;
+	protected final String owlPath;
+	protected OntModel ontology;
+	protected InfModel inf;
+	protected boolean verbose;
+	
 	public final static Map<String,String> MIBobjectsMap;
 	public final static Vector<String> CNMPobjects = new Vector<String>();
 	public final static String NS = "http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#";
@@ -57,7 +61,14 @@ public class AppClass {
 	public AppClass(String owlPath,String agent) {
 		this.agent = agent;
 		this.owlPath = owlPath;
+		
+		// Redirect errors away
+		PrintStream err = System.err;
+		System.setErr(new PrintStream(new ByteArrayOutputStream()));
 		ontology = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_MICRO_RULE_INF,null);
+		// Reset error redirection
+		System.setErr(err);
+		
 		ontology.read(FileManager.get().open(this.owlPath), null);
 		Model schema = FileManager.get().loadModel(this.owlPath);
 		Reasoner reason = ReasonerRegistry.getOWLReasoner();
@@ -81,12 +92,14 @@ public class AppClass {
 		Resource nForce = this.inf.getResource(NS+in);
 		String mib = mibObjectFinder(this.inf, nForce, null, null);
 
-		System.out.println("MIB Module: "+MIBobjectsMap.get(mib));
-		System.out.println("MIB Object: "+mib);
+		if (verbose) {
+			System.out.println("MIB Module: "+MIBobjectsMap.get(mib));
+			System.out.println("MIB Object: "+mib);
+		}
 		
 		ProcessBuilder pb = new ProcessBuilder(
 				"snmpgetnext",
-				"-v2c", "-cttm4128", "-Ov",
+				"-v2c", "-cttm4128",
 				agent,
 				MIBobjectsMap.get(mib)+"::"+mib
 		);
@@ -98,7 +111,8 @@ public class AppClass {
 		scanner.useDelimiter("\\A");
 		if (scanner.hasNext()) a = scanner.next();
 		scanner.close();
-		return a.substring(a.indexOf(":")+1).trim();
+		return a;
+		//return a.substring(a.indexOf(":")+1).trim();
 		} catch (IOException e) { return null; }
 	}
 	
@@ -114,17 +128,38 @@ public class AppClass {
 	public static void main(String[] args) {
 		String agent = "129.241.209.30";
 		String owlPath = "data/sematicweb-2013-new.owl";
-		AppClass a = new AppClass(owlPath ,agent);
-		System.out.println("Please enter the CNMP Object name: ");
-		String cnmpObject;
-		Scanner reader = new Scanner(System.in);
-		cnmpObject = reader.nextLine();
-		reader.close();
+		String cnmpObject = null;
+		boolean verbose = true;
+		
+		for(int i=0;i<args.length;i++) {
+			if (i<args.length-1) {
+				if ("-a".equals(args[i]))
+					agent = args[i+1];
+				if ("-o".equals(args[i]))
+					owlPath = args[i+1];
+				if ("-c".equals(args[i]))
+					cnmpObject = args[i+1];
+			}
+			if ("-v".equals(args[i]))
+				verbose = true;
+			if ("-q".equals(args[i]))
+				verbose = false;
+		}
+		
+		if (cnmpObject == null) {
+			System.out.print("Please enter the CNMP Object name: ");
+			Scanner reader = new Scanner(System.in);
+			cnmpObject = reader.nextLine();
+			reader.close();
+		}
 		if (objectValidator(cnmpObject)) {
-			System.out.println("Processing...");
+			if (verbose)
+				System.out.println("Processing...");
+			AppClass a = new AppClass(owlPath ,agent);
+			a.verbose = verbose;
 			System.out.println(a.getMIBobjectValue(cnmpObject));
 		} else {
-			System.out.println("The CNMP Object inserted is not valid...");
+			System.err.println("CNMP Object "+cnmpObject+" is not valid...");
 		}
 	}
 }
