@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Vector;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
@@ -31,18 +30,8 @@ public class AppClass {
 	protected boolean verbose;
 	
 	public final static Map<String,String> MIBobjectsMap;
-	public final static Vector<String> CNMPobjects = new Vector<String>();
 	public final static String NS = "http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#";
 	
-	static {
-		CNMPobjects.add("x5178");
-		CNMPobjects.add("x3125");
-		CNMPobjects.add("x4912");
-		CNMPobjects.add("x5982");
-		CNMPobjects.add("x1234");
-		CNMPobjects.add("x6742");
-	}
-
 	static {
 		Map<String, String> mibMap = new HashMap<String,String>();
 		mibMap.put("hrSystemDate", "HOST-RESOURCES-MIB");
@@ -111,17 +100,10 @@ public class AppClass {
 		scanner.useDelimiter("\\A");
 		if (scanner.hasNext()) snmpgetnextOutput = scanner.next();
 		scanner.close();
+		if (snmpgetnextOutput == null)
+			return null;
 		return new MibObject(snmpgetnextOutput);
 		} catch (IOException e) { return null; }
-	}
-	
-	public static boolean objectValidator(String input) {
-		for (int i=0; i<CNMPobjects.size(); i++) {
-			if (input.equals(CNMPobjects.get(i))) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	public static void main(String[] args) {
@@ -151,14 +133,14 @@ public class AppClass {
 			cnmpObject = reader.nextLine();
 			reader.close();
 		}
-		if (objectValidator(cnmpObject)) {
-			if (verbose)
-				System.out.println("Processing...");
-			AppClass a = new AppClass(owlPath ,agent);
-			a.verbose = verbose;
-			System.out.println(a.getMIBObjectValue(cnmpObject));
-		} else {
-			System.err.println("CNMP Object "+cnmpObject+" is not valid...");
-		}
+		if (verbose)
+			System.out.println("Processing...");
+		AppClass a = new AppClass(owlPath ,agent);
+		a.verbose = verbose;
+		MibObject mib = a.getMIBObjectValue(cnmpObject);
+		if (mib == null)
+			System.err.println("Could not find any SNMP object for CNMP object "+cnmpObject+".");
+		else
+			System.out.println(mib);
 	}
 }
