@@ -88,7 +88,7 @@ public class AppClass {
 		return "MIB-Object not found.";			
 	}
 	        
-	public String getMIBobjectValue(String in) throws NullPointerException {
+	public MibObject getMIBObjectValue(String in) throws NullPointerException {
 		Resource nForce = this.inf.getResource(NS+in);
 		String mib = mibObjectFinder(this.inf, nForce, null, null);
 
@@ -105,14 +105,13 @@ public class AppClass {
 		);
 		
 		try {
-		String a = null;
+		String snmpgetnextOutput = null;
 		Process p = pb.start();
 		Scanner scanner = new Scanner(p.getInputStream(), "UTF-8");
 		scanner.useDelimiter("\\A");
-		if (scanner.hasNext()) a = scanner.next();
+		if (scanner.hasNext()) snmpgetnextOutput = scanner.next();
 		scanner.close();
-		return a;
-		//return a.substring(a.indexOf(":")+1).trim();
+		return new MibObject(snmpgetnextOutput);
 		} catch (IOException e) { return null; }
 	}
 	
@@ -157,7 +156,7 @@ public class AppClass {
 				System.out.println("Processing...");
 			AppClass a = new AppClass(owlPath ,agent);
 			a.verbose = verbose;
-			System.out.println(a.getMIBobjectValue(cnmpObject));
+			System.out.println(a.getMIBObjectValue(cnmpObject));
 		} else {
 			System.err.println("CNMP Object "+cnmpObject+" is not valid...");
 		}
