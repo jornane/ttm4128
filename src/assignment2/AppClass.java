@@ -27,7 +27,7 @@ public class AppClass {
 	private OntModel ontology;
 	private InfModel inf;
 	public final static Map<String,String> MIBobjectsMap;
-	public final static Vector<String> CNMPobjects = new Vector<>();
+	public final static Vector<String> CNMPobjects = new Vector<String>();
 	public final static String NS = "http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#";
 	
 	static {
