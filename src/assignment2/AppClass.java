@@ -23,14 +23,16 @@ import com.hp.hpl.jena.util.FileManager;
 import com.hp.hpl.jena.util.PrintUtil;
 
 public class AppClass {
-	protected String agent;
+	protected final String agent;
 	protected final String owlPath;
-	protected OntModel ontology;
-	protected InfModel inf;
+	protected final OntModel ontology;
+	protected final InfModel inf;
 	protected boolean verbose;
 	
-	public final static Map<String,String> MIBobjectsMap;
-	public final static String NS = "http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#";
+	public static final Map<String,String> MIBMODULES;
+	public static final String NS = "http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#";
+	public static final String OWLPATH = "data/sematicweb-2013-new.owl";
+	public static final String AGENT = "129.241.209.30";
 	
 	static {
 		Map<String, String> mibMap = new HashMap<String,String>();
@@ -44,7 +46,7 @@ public class AppClass {
 		mibMap.put("tcpMaxConn","TCP-MIB");
 		mibMap.put("udpNoPorts","UDP-MIB");
 		mibMap.put("udpOutDatagrams","UDP-MIB");
-		MIBobjectsMap = Collections.unmodifiableMap(mibMap);
+		MIBMODULES = Collections.unmodifiableMap(mibMap);
 	}
 
 	public AppClass(String owlPath,String agent) {
@@ -68,7 +70,7 @@ public class AppClass {
 	public String mibObjectFinder(Model model, Resource resource, Property p, String s) {
 		for (StmtIterator iterator = model.listStatements(resource,p,s); iterator.hasNext();) {
 			Statement stmt = iterator.nextStatement();
-			for (Map.Entry<String, String> entry : MIBobjectsMap.entrySet()) {
+			for (Map.Entry<String, String> entry : MIBMODULES.entrySet()) {
 				if (PrintUtil.print(stmt).contains(entry.getKey())) {
 					return entry.getKey();
 				}
@@ -76,13 +78,13 @@ public class AppClass {
 		}
 		return "MIB-Object not found.";			
 	}
-	        
+	
 	public MibObject getMIBObjectValue(String in) throws NullPointerException {
 		Resource nForce = this.inf.getResource(NS+in);
 		String mib = mibObjectFinder(this.inf, nForce, null, null);
 
 		if (verbose) {
-			System.out.println("MIB Module: "+MIBobjectsMap.get(mib));
+			System.out.println("MIB Module: "+MIBMODULES.get(mib));
 			System.out.println("MIB Object: "+mib);
 		}
 		
@@ -90,7 +92,7 @@ public class AppClass {
 				"snmpgetnext",
 				"-v2c", "-cttm4128",
 				agent,
-				MIBobjectsMap.get(mib)+"::"+mib
+				MIBMODULES.get(mib)+"::"+mib
 		);
 		
 		try {
@@ -107,8 +109,16 @@ public class AppClass {
 	}
 	
 	public static void main(String[] args) {
-		String agent = "129.241.209.30";
-		String owlPath = "data/sematicweb-2013-new.owl";
+		MibObject mib = getMibObject(args);
+		if (mib == null)
+			System.err.println("Could not find any SNMP object for CNMP object.");
+		else
+			System.out.println(mib);
+	}
+
+	public static MibObject getMibObject(String[] args) {
+		String agent = AGENT;
+		String owlPath = OWLPATH;
 		String cnmpObject = null;
 		boolean verbose = true;
 		
@@ -135,12 +145,8 @@ public class AppClass {
 		}
 		if (verbose)
 			System.out.println("Processing...");
-		AppClass a = new AppClass(owlPath ,agent);
-		a.verbose = verbose;
-		MibObject mib = a.getMIBObjectValue(cnmpObject);
-		if (mib == null)
-			System.err.println("Could not find any SNMP object for CNMP object "+cnmpObject+".");
-		else
-			System.out.println(mib);
+		AppClass converter = new AppClass(owlPath, agent);
+		converter.verbose = verbose;
+		return converter.getMIBObjectValue(cnmpObject);
 	}
 }
