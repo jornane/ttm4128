@@ -19,7 +19,7 @@ public class MibObject {
 		objectName = snmpgetOutputLine.substring(moduleSep+2, objectNameIndex);
 		objectIndex = Integer.parseInt(snmpgetOutputLine.substring(objectNameIndex+1, typeIndex));
 		type = snmpgetOutputLine.substring(typeIndex+3, valueIndex);
-		value = snmpgetOutputLine.substring(valueIndex+2);
+		value = snmpgetOutputLine.substring(valueIndex+2).trim();
 	}
 	
 	public String toString() {
