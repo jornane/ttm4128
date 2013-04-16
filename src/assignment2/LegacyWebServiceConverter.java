@@ -33,7 +33,6 @@ public abstract class LegacyWebServiceConverter {
 		final MessageFactory messageFactory = MessageFactory.newInstance();
 		final SOAPMessage soapMessage = messageFactory.createMessage();
 
-		// Object for message parts
 		final SOAPPart soapPart = soapMessage.getSOAPPart();
 		final SOAPEnvelope envelope = soapPart.getEnvelope();
 
@@ -42,7 +41,6 @@ public abstract class LegacyWebServiceConverter {
 		envelope.addNamespaceDeclaration("enc", "http://schemas.xmlsoap.org/soap/encoding/");
 		envelope.addNamespaceDeclaration("env", "http://schemas.xmlsoap.org/soap/envelop/");
 
-		// add the technet namespace as "technet"
 		envelope.addNamespaceDeclaration(MANAGEMENTSERVER_NAMESPACE_PREFIX, "http://managementserver.com");
 
 		envelope.setEncodingStyle("http://schemas.xmlsoap.org/soap/encoding/");
