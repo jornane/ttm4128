@@ -22,7 +22,7 @@ import com.hp.hpl.jena.reasoner.Reasoner;
 import com.hp.hpl.jena.reasoner.ReasonerRegistry;
 import com.hp.hpl.jena.util.FileManager;
 
-public class AppClass {
+public class CNMP2SNMPConverter {
 	/** Address of the agent (IP address or hostname, is used for the snmpgetnext command) */
 	protected final String agent;
 	/** The path to the OWL file containing the inferences */
@@ -61,7 +61,7 @@ public class AppClass {
 	 * @param owlPath @see {@link #owlPath}
 	 * @param agent	@see {@link #agent}
 	 */
-	public AppClass(String owlPath,String agent) {
+	public CNMP2SNMPConverter(String owlPath,String agent) {
 		this.agent = agent;
 		this.owlPath = owlPath;
 		
@@ -198,7 +198,7 @@ public class AppClass {
 			System.err.println("No module mapping for "+cnmpObject);
 		if (verbose)
 			System.out.println("Processing...");
-		AppClass converter = new AppClass(owlPath, agent);
+		CNMP2SNMPConverter converter = new CNMP2SNMPConverter(owlPath, agent);
 		converter.verbose = verbose;
 		return converter.getMIBObjectValue(cnmpObject);
 	}

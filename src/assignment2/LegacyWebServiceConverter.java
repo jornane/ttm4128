@@ -114,7 +114,7 @@ public abstract class LegacyWebServiceConverter {
 			mibArgs[args.length] = "-c";
 			mibArgs[args.length+1] = request.objectName;
 			
-			MibObject snmpResult = AppClass.getMibObject(mibArgs);
+			MibObject snmpResult = CNMP2SNMPConverter.getMibObject(mibArgs);
 			if (snmpResult != null)
 				System.out.println(sendValue(request.requestID, snmpResult.value));
 		} catch (SOAPException e) {
