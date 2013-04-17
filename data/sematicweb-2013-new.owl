@@ -157,9 +157,9 @@
     
 
 
-    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#X5178 -->
+    <!-- http://www.item.ntnu.no/fag/ttm4128/sematicweb-2013#x5178 -->
 
-    <owl:Class rdf:about="&sematicweb-2013;X5178">
+    <owl:Class rdf:about="&sematicweb-2013;x5178">
         <owl:equivalentClass>
             <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
