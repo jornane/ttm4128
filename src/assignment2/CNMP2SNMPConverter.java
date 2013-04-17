@@ -105,7 +105,7 @@ public class CNMP2SNMPConverter {
 					continue;
 				//String stmtSubject = new URI(stmt.getSubject().toString()).getFragment();
 				String stmtObject = new URI(stmt.getObject().toString()).getFragment();
-				if (stmtObject.matches(parentPattern.toString()))
+				if (stmtObject != null && stmtObject.matches(parentPattern.toString()))
 					continue;
 				return stmtObject;
 			} catch (URISyntaxException e) {/* do nothing */}
