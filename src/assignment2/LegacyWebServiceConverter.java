@@ -72,6 +72,7 @@ public abstract class LegacyWebServiceConverter {
 		final SOAPMessage soapMessageReply = soapConnection.call(soapMessage, GET_OBJECT_URL);
 		final NodeList nodes = soapMessageReply.getSOAPBody().getFirstChild().getChildNodes();
 		soapConnection.close();
+		
 		assert nodes.getLength() == 2;
 		assert "ns:return".equals(nodes.item(0).getNodeName());
 		assert "ns:return".equals(nodes.item(1).getNodeName());
@@ -91,10 +92,9 @@ public abstract class LegacyWebServiceConverter {
 	public static String sendValue(String requestId, String objectValue) throws SOAPException {
 		final SOAPMessage soapMessage = createSoapMessage();
 		final SOAPBody soapBody = soapMessage.getSOAPBody();
-		final SOAPElement loginElement = soapBody.addChildElement("Login", MANAGEMENTSERVER_NAMESPACE_PREFIX);
 
-		loginElement.addChildElement("requestID", MANAGEMENTSERVER_NAMESPACE_PREFIX).addTextNode(requestId);
-		loginElement.addChildElement("objectValue", MANAGEMENTSERVER_NAMESPACE_PREFIX).addTextNode(objectValue);
+		soapBody.addChildElement("requestID", MANAGEMENTSERVER_NAMESPACE_PREFIX).addTextNode(requestId);
+		soapBody.addChildElement("objectValue", MANAGEMENTSERVER_NAMESPACE_PREFIX).addTextNode(objectValue);
 
 		soapMessage.saveChanges();
 
