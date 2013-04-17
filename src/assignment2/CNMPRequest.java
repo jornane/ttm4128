@@ -10,23 +10,23 @@ public class CNMPRequest {
 	/** CNMP object name (xnnnn) */
 	protected final String objectName;
 	/** Numeric request ID */
-	protected final String requestID;
+	protected final String requestId;
 
 	/**
 	 * Instantiate new CNMPRequest
 	 * @param objectName @see {@link #objectName}
-	 * @param requestID @see {@link #requestID}
+	 * @param requestId @see {@link #requestId}
 	 */
-	public CNMPRequest(String objectName, String requestID) {
+	public CNMPRequest(String objectName, String requestId) {
 		this.objectName = objectName;
-		this.requestID = requestID;
+		this.requestId = requestId;
 	}
 	
 	/**
 	 * String formatted as requestID@objectName
 	 */
 	public String toString() {
-		return requestID+'@'+objectName;
+		return requestId+'@'+objectName;
 	}
 
 }
