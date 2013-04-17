@@ -88,9 +88,10 @@ public class CNMP2SNMPConverter {
 	 * 			Never returns the subject or any of the values in parentClasses.
 	 */
 	public String resolveInference(Model model, String subject, String... parentClasses) {
-		StringBuilder parentPattern = new StringBuilder();
+		StringBuilder parentPattern = new StringBuilder("("+Pattern.quote(subject));
 		for(String parentClass : parentClasses)
 			parentPattern.append("|"+Pattern.quote(parentClass));
+		parentPattern.append(")");
 		for (StmtIterator iterator = model.listStatements(
 					model.getResource(NS+subject),
 					null,
@@ -102,9 +103,9 @@ public class CNMP2SNMPConverter {
 				String stmtPredicate = stmt.getPredicate().getLocalName();
 				if (!"subClassOf".equals(stmtPredicate))
 					continue;
-				String stmtSubject = new URI(stmt.getSubject().toString()).getFragment();
+				//String stmtSubject = new URI(stmt.getSubject().toString()).getFragment();
 				String stmtObject = new URI(stmt.getObject().toString()).getFragment();
-				if (stmtObject.matches("("+Pattern.quote(stmtSubject)+parentPattern+")"))
+				if (stmtObject.matches(parentPattern.toString()))
 					continue;
 				return stmtObject;
 			} catch (URISyntaxException e) {/* do nothing */}
