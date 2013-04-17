@@ -92,9 +92,10 @@ public abstract class LegacyWebServiceConverter {
 	public static String sendValue(String requestId, String objectValue) throws SOAPException {
 		final SOAPMessage soapMessage = createSoapMessage();
 		final SOAPBody soapBody = soapMessage.getSOAPBody();
+		final SOAPElement trapElement = soapBody.addChildElement("trap", MANAGEMENTSERVER_NAMESPACE_PREFIX);
 
-		soapBody.addChildElement("requestID", MANAGEMENTSERVER_NAMESPACE_PREFIX).addTextNode(requestId);
-		soapBody.addChildElement("objectValue", MANAGEMENTSERVER_NAMESPACE_PREFIX).addTextNode(objectValue);
+		trapElement.addChildElement("requestID", MANAGEMENTSERVER_NAMESPACE_PREFIX).addTextNode(requestId);
+		trapElement.addChildElement("objectValue", MANAGEMENTSERVER_NAMESPACE_PREFIX).addTextNode(objectValue);
 
 		soapMessage.saveChanges();
 
