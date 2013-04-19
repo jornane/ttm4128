@@ -54,36 +54,46 @@ public abstract class LegacyWebServiceConverter {
 	* @throws UnsupportedOperationException
 	* @throws SOAPException
 	*/
-	public static SOAPConnection getSoapConnection() throws UnsupportedOperationException, SOAPException {
+	public static SOAPConnection getSoapConnection() throws SOAPException {
 		final SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
 		final SOAPConnection soapConnection = soapConnectionFactory.createConnection();
 
 		return soapConnection;
 	}
-
+	
 	/**
-	 * Get a request for a CNMP object from the legacy service
-	 * @return	the CNMPRequest
+	 * Execute getRequest on the legacy system.
+	 * @require Legacy system follows contract
+	 * @return	Array with two values, CNMP object name and Request ID.
 	 * @throws SOAPException
 	 */
-	public static CNMPRequest getCNMPRequest() throws SOAPException {
+	public static String[] getRequest() throws SOAPException {
 		final SOAPConnection soapConnection = getSoapConnection();
 		final SOAPMessage soapMessage = createSoapMessage();
 		final SOAPMessage soapMessageReply = soapConnection.call(soapMessage, GET_OBJECT_URL);
 		final NodeList nodes = soapMessageReply.getSOAPBody().getFirstChild().getChildNodes();
 		soapConnection.close();
 		
-		assert nodes.getLength() == 2;
-		assert "ns:return".equals(nodes.item(0).getNodeName());
-		assert "ns:return".equals(nodes.item(1).getNodeName());
-		return new CNMPRequest(
-				nodes.item(0).getTextContent(),
-				nodes.item(1).getTextContent()
-			);
+		final int len = nodes.getLength();
+		final String[] result = new String[len];
+		for(int i=0;i<len;i++)
+			result[i] = nodes.item(i).getTextContent();
+		return result;
+	}
+	
+	/**
+	 * Get a request for a CNMP object from the legacy service
+	 * @return	the CNMPRequest
+	 * @throws SOAPException
+	 */
+	public static CNMPRequest getCNMPRequest() throws SOAPException {
+		String[] request = getRequest();
+		return new CNMPRequest(request[0], request[1]);
 	}
 	
 	/**
 	 * Send a value to the legacy system
+	 * @require Legacy system follows contract
 	 * @param requestId	The requestId included in the CNMPRequest that triggered this send
 	 * @param objectValue	The value of the requested object
 	 * @return	The string returned opun sending the value
